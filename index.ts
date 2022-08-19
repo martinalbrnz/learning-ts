@@ -33,7 +33,7 @@ interface Vehicle {
 	name: string,
 	wheels: number,
 	color: Color,
-	[key: string]: any
+	[key: string]: any // This is optional
 }
 
 // Now I can add more fields
@@ -55,10 +55,21 @@ const vehicle2: Vehicle = {
 function divide(x: number, y: number): string {
 	return (x / y).toString()
 }
-// you can return void if the function have no return
-
 // console.log(divide('hello', 'world')) // error
 // console.log(divide(8, 2)) // 4
 
+// you can return void if the function have no return
+const voidfunc = (name: string): void => {
+	console.log('My name is ', name)
+}
+
+// Functions can be included in interfaces
+interface someComponentProps {
+	showmodal: boolean,
+	changeModalMessage(message: string): void
+}
+// This is very useful when using React with TS
+
 /* Arrays */
-const myArr: Vehicle[] = []
+const myArr: Vehicle[] = [{ name: 'Sports car', wheels: 4, color: "red" }, { name: 'Rosetta', wheels: 3, color: 'blue', brand: 'vmw' }]
+// const anotherArr: Vehicle[] = [{ name: 'Skate', wheels: 4 }] // missing 'color' in type
