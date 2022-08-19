@@ -137,10 +137,10 @@ const animal2: Animal = {
 // A more flexible interface
 type Color = 'red' | 'blue' | 'white' | 'black'
 
-interface Vehicle {
-	name: string,
-	wheels: number,
-	color: Color,
+type Vehicle = {
+	name: string
+	wheels: number
+	color: Color
 	[key: string]: any // This is optional
 }
 
@@ -159,6 +159,10 @@ const vehicle2: Vehicle = {
 	color: 'white'
 }
 
+/* Arrays */
+// Adding [] at the end of a type/interface, specifies it as an array/list
+const myArr: Vehicle[] = [{ name: 'Sports car', wheels: 4, color: "red" }, { name: 'Rosetta', wheels: 3, color: 'blue', brand: 'vmw' }]
+
 /* Functions */
 // Uses numeric params but returns a string
 function divide(x: number, y: number): string {
@@ -172,13 +176,34 @@ const voidfunc = (name: string): void => {
 	console.log('My name is ', name)
 }
 
-// Functions can be included in interfaces
-interface someComponentProps {
-	showmodal: boolean,
+// Functions can be included in types
+type someComponentProps = {
+	showmodal: boolean
 	changeModalMessage(message: string): void
 }
 // This is very useful when using React with TS
-
-/* Arrays */
-const myArr: Vehicle[] = [{ name: 'Sports car', wheels: 4, color: "red" }, { name: 'Rosetta', wheels: 3, color: 'blue', brand: 'vmw' }]
 // const anotherArr: Vehicle[] = [{ name: 'Skate', wheels: 4 }] // missing 'color' in type
+
+// We can use flags in functions to!
+// For example, a function to do somthing with an array but without modifying the original
+const iAmBlueDabadeeDabada = (anArray: readonly Vehicle[]): Vehicle[] => {
+	// anArray.push(/* Some vehicle... */) // This should modify the original array
+	return anArray.map((item) => {
+		return {...item, color: 'blue'}
+	})
+}
+
+// Using type intersection it could ensure that the output type is what we want
+type RedVehicle = Vehicle & {color: 'red'}
+/* Equivalent
+type RedVehicle = {
+	name: string
+	wheels: number
+	color: 'red'
+}
+*/
+const someAnthem = (anArray: readonly Vehicle[]): RedVehicle[] => {
+	return anArray.map((item) => {
+		return {...item, color: 'red'}
+	})
+}
